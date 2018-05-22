@@ -98,7 +98,8 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator {
         try {
             kafka = KafkaCluster.fromConfigMap(assemblyCm);
         } catch (Exception e) {
-            return Future.failedFuture(e);
+            log.error(e.getMessage());
+            return Future.failedFuture(e.getMessage());
         }
         Service service = kafka.generateService();
         Service headlessService = kafka.generateHeadlessService();
@@ -161,7 +162,8 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator {
         try {
             zk = ZookeeperCluster.fromConfigMap(assemblyCm);
         } catch (Exception e) {
-            return Future.failedFuture(e);
+            log.error(e.getMessage());
+            return Future.failedFuture(e.getMessage());
         }
         Service service = zk.generateService();
         Service headlessService = zk.generateHeadlessService();
@@ -219,7 +221,8 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator {
         try {
             topicOperator = TopicOperator.fromConfigMap(assemblyCm);
         } catch (Exception e) {
-            return Future.failedFuture(e);
+            log.error(e.getMessage());
+            return Future.failedFuture(e.getMessage());
         }
         Deployment deployment = topicOperator != null ? topicOperator.generateDeployment() : null;
         return deploymentOperations.reconcile(namespace, topicOperatorName(name), deployment);
